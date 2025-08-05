@@ -3,6 +3,7 @@ import './Dashboard.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faCartShopping, faUser, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import swal from 'sweetalert';
 
 function Dashboard() {
   const [hotDeals, setHotDeals] = useState([]);
@@ -229,45 +230,68 @@ const [registrationData, setRegistrationData] = useState({ name: "", email: "", 
 )}
 
       {/* Step 2B: Show registration form if not registered */}
-      {step === 2 && status === "N" && (
-        <>
-          <h3>Register</h3>
-          <input
-            type="text"
-            placeholder="Name"
-            value={registrationData.name}
-            onChange={(e) => setRegistrationData({ ...registrationData, name: e.target.value })}
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            value={registrationData.email}
-            onChange={(e) => setRegistrationData({ ...registrationData, email: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="Phone Number"
-            value={registrationData.phone}
-            onChange={(e) => setRegistrationData({ ...registrationData, phone: e.target.value })}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={registrationData.password}
-            onChange={(e) => setRegistrationData({ ...registrationData, password: e.target.value })}
-          />
-          <button onClick={() => {
-            alert("User Registered!");
-          }}>
-            Register
-          </button>
-        </>
-      )}
+     {step === 2 && status === "N" && (
+  <>
+    <h3>Register</h3>
+    <input
+      type="text"
+      placeholder="Name"
+      value={registrationData.name}
+      onChange={(e) => setRegistrationData({ ...registrationData, name: e.target.value })}
+    />
+    <input
+      type="email"
+      placeholder="Email"
+      value={registrationData.email}
+      onChange={(e) => setRegistrationData({ ...registrationData, email: e.target.value })}
+    />
+    <input
+      type="text"
+      placeholder="Phone Number"
+      value={registrationData.phone}
+      onChange={(e) => setRegistrationData({ ...registrationData, phone: e.target.value })}
+    />
+    <input
+      type="password"
+      placeholder="Password"
+      value={registrationData.password}
+      onChange={(e) => setRegistrationData({ ...registrationData, password: e.target.value })}
+    />
+    <button
+      onClick={async () => {
+        try {
+          const response = await fetch("http://localhost:8080/api/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: registrationData.name,
+              email: registrationData.email,
+              mobile: registrationData.phone,
+              password: registrationData.password,
+            }),
+          });
+
+          if (response.ok) {
+            swal("Success", "Registration Successful!", "success");
+            // You can also reset the form or move to another step
+          } else {
+            const errorData = await response.json();
+            swal("Error", errorData.message || "Registration failed", "error");
+          }
+        } catch (error) {
+          swal("Error", "Something went wrong!", "error");
+        }
+      }}
+    >
+      Register
+    </button>
+  </>
+)}
     </div>
   </div>
 )}
-
-
     </div>
   );
 }
