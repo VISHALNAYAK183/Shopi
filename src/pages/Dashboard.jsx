@@ -5,6 +5,9 @@ import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faCartShopping, faUser, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import swal from 'sweetalert';
 import { useNavigate } from 'react-router-dom';
+import { useWishlist } from "../context/WishlistContextTemp";
+
+import { Link } from 'react-router-dom';
 
 
 function Dashboard() {
@@ -14,7 +17,9 @@ function Dashboard() {
   const [watchItems, setWatchItems] = useState([]);
   const [footwearItems, setFootwearItems] = useState([]);
   const [userDetails, setUserDetails] = useState(null);
+   const { wishlist } = useWishlist();
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -76,7 +81,12 @@ function Dashboard() {
           <img src="/assets/logo.png" alt="Logo" />
         </div>
         <div className="icons">
-          <FontAwesomeIcon icon={faHeart} className="icon" title="Wishlist" />
+             <Link to="/wishlist" className="wishlist-icon">
+        <FontAwesomeIcon icon={faHeart} title="Wishlist" />
+        {wishlist.length > 0 && (
+          <span className="wishlist-count">{wishlist.length}</span>
+        )}
+      </Link>
           <FontAwesomeIcon icon={faCartShopping} className="icon" title="Cart" />
           <FontAwesomeIcon
             icon={faUser}

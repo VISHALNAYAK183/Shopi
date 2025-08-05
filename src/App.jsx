@@ -1,17 +1,17 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
-import ProductDetails from './pages/ProductDetails'; // create this page next
+import ProductDetails from './pages/ProductDetails';
+import Wishlist from './pages/Wishlist'; // ✅ adjust path correctly
 
 function App() {
   return (
     <div className="App">
-      <Router>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/product/:id" element={<ProductDetails />} />
-        </Routes>
-      </Router>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/wishlist" element={<Wishlist />} />
+      </Routes>
     </div>
   );
 }

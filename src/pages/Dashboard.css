@@ -126,3 +126,20 @@ html, body { width: 100%; overflow-x: hidden; }
   cursor: pointer;
   color: #888;
 }
+
+/* in Appbar.css or Dashboard.css */
+.wishlist-icon {
+  position: relative;
+  display: inline-block;
+}
+
+.wishlist-count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  font-size: 12px;
+  padding: 2px 6px;
+}
